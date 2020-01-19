@@ -1,0 +1,80 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<style>
+html{ margin: 0; padding:0; }
+body{ margin:0; padding:0; }
+#bodyPage{ width:100%; min-height:100%; height:auto !important; height:100%; position:fixed; top:0; left:0; }
+img.bg { position:absolute; top: 0px; left: 0px; z-index:1; display:none;}
+</style>
+<script src="http://www.jq22.com/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="js/fullplay.js"></script>
+
+		<meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <meta name="description" content="Circle Hover Effects with CSS Transitions" />
+        <meta name="keywords" content="circle, border-radius, hover, css3, transition, image, thumbnail, effect, 3d" />
+        <meta name="author" content="Codrops" />
+        <link rel="stylesheet" type="text/css" href="css/demo.css" />
+		<link rel="stylesheet" type="text/css" href="css/common.css" />
+        <link rel="stylesheet" type="text/css" href="css/button_style.css" />
+		<script type="text/javascript" src="js/modernizr.custom.79639.js"></script> 
+
+		<!--[if lte IE 8]><style>.main{display:none;} .support-note .note-ie{display:block;}</style><![endif]-->
+
+<title></title>
+
+</head>
+<body>
+
+<div id="bodyBox">
+
+	<div id="bodyPage">
+   	  <img src="images/bg1.png" class="bg"/>
+	  
+      <img src="images/bg2.png" class="bg"/>
+
+      <img src="images/bg3.png" class="bg"/>
+	
+    </div>
+
+    
+</div>
+
+	<div>
+			<section class="main"id="gotobutton"style="display:none">
+				<ul class="ch-grid">
+					<li id="ButtonSize">
+					<a href="index.html">
+						<div class="ch-item ch-img-2">
+							<div class="ch-info">
+								<h3>从此进入<p>
+								找回幼时的星空</p></h3>
+								<div style="margin-top:0px"><h4>by_ADC科技 </h4></div>
+							</div>
+						</div>
+						  </a>
+					</li>
+				</ul>
+			</section>
+	</div>
+	<img id="mainbg"src="images/bg.png" style="width:100%;height:100%;display:none;">
+</img>
+<script type="text/javascript">
+$(document).ready(function(e) {
+    
+   $("#bodyPage").fullImages({
+	   ImgWidth: 1920,
+	   ImgHeight: 980,
+	   autoplay :  3500,
+	   fadeTime : 1500
+   });
+	
+});
+</script>
+
+
+
+</body>
+</html>

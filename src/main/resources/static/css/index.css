@@ -1,0 +1,10 @@
+.tubiao {
+	background-image: url(../images/lunbo/tubiao.jpg);
+	background-position:top;
+	background-size:contain;
+	background-repeat:no-repeat;
+}
+.form_style{
+	padding-left:10px;
+	padding-right:10px
+}
