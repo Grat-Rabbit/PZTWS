@@ -29,7 +29,7 @@ spring:
       #基本属性
       url: jdbc:mysql://127.0.0.1:3306/pztws?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=GMT
       username: root
-      password: AS29.lpkxzalqw
+      password: 
       #配置初始化大小/最小/最大
       initial-size: 1
       min-idle: 1
@@ -65,13 +65,6 @@ jackson:
 #pagehelper:
 #  #  helperDialect: mysql
 #  reasonable: false   # 禁用合理化时，如果pageNum<1或pageNum>pages会返回空数据
-
-  #七牛云配置 上传凭证AccessKey，SecretKey和Bucket
-  qiniu:     
-       accessKey: P63Fl_oUacfVwpMGuiR826rc7byWqwqyy_OBIVm3
-       secretKey: yL_Uk2M3b68aM96ZC2dW-F8eir0R2Vuq5vE9wItz
-       domain: http://q4z9evzif.bkt.clouddn.com/
-       bucket: pztws
 
 
 
