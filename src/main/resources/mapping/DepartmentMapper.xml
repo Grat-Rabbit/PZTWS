@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pztws.demo.dao.DepartmentDao">
+
+    <select id="findDepartmentById" parameterType="String" resultType="com.pztws.demo.model.Department">
+        Select departmentId,departmentName,departmentBrief,departmentPic From Department where departmentId=#{departmentId}
+    </select>
+
+    <select id="findDepartmentList" resultType="com.pztws.demo.model.Department">
+        SELECT departmentId,departmentName FROM department
+    </select>
+
+    <select id="detailDepartment" resultType="com.pztws.demo.model.Department">
+        SELECT departmentId,departmentName,departmentBrief,departmentPic FROM Department
+    </select>
+
+    <insert id="insertDepartment" parameterType="String">
+        INSERT INTO Department (`departmentId`,`departmentName`,`departmentPic`,`departmentBrief`) VALUES(#{new_id},#{departmentName},#{departmentPic},#{departmentBrief})
+    </insert>
+
+    <update id="modifyDepartment" parameterType="String">
+        UPDATE Department
+        <trim prefix="set" suffixOverrides="," suffix="where departmentId=#{departmentId}">
+            <if test="departmentName != null">departmentName=#{departmentName},</if>
+            <if test="departmentPic != null "> departmentPic=#{departmentPic},</if>
+            <if test="departmentBrief != null ">   departmentBrief=#{departmentBrief},</if>
+        </trim>
+    </update>
+
+    <select id="selectCount" resultType="integer">
+        SELECT COUNT(*) FROM department
+    </select>
+
+    <delete id="deleteDepartment">
+        DELETE FROM Department WHERE departmentId = #{departmentId}
+    </delete>
+
+    <update id="modifyUserDepartment" parameterType="String">
+        UPDATE USER SET departmentId = #{departmentId} WHERE userId=#{userId}
+    </update>
+</mapper>

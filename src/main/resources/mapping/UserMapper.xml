@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pztws.demo.dao.UserDao">
+
+
+    <resultMap id="resultUserLevel" type="com.pztws.demo.model.UserLevel">
+        <id property="userId" column="userId" javaType="String" jdbcType="VARCHAR"/>
+        <result property="userName" column="userName" javaType="String" jdbcType="VARCHAR"/>
+        <result property="userPic" column="userPic" javaType="String" jdbcType="VARCHAR"/>
+        <result property="departmentId" column="departmentId" javaType="String" jdbcType="VARCHAR"/>
+        <result property="departmentName" column="departmentName" javaType="String" jdbcType="VARCHAR"/>
+        <result property="level" column="level" javaType="Integer" jdbcType="INTEGER"/>
+    </resultMap>
+
+
+    <select id="loginPhone" parameterType="String" resultType="com.pztws.demo.model.User">
+        SELECT user.userId,user.phone,user.password,user.username,user.userPic,
+        department.departmentName, user.signature,user.level,user.grade
+        FROM `User` LEFT JOIN `Department` ON user.departmentId = department.departmentId WHERE
+        user.phone=#{mobile} AND user.password=#{password}
+    </select>
+
+    <select id="loginId" parameterType="String" resultType="com.pztws.demo.model.User">
+        SELECT user.userId,user.phone,user.password,user.username,user.userPic,
+        department.departmentName, user.signature,user.level,user.grade
+        FROM `User` LEFT JOIN `Department` ON user.departmentId = department.departmentId WHERE
+        user.userId=#{userId} AND user.password=#{password}
+    </select>
+
+    <select id="findUserById" parameterType="String" resultType="com.pztws.demo.model.User">
+        SELECT user.userId,user.phone,user.password,user.username,user.userPic ,
+        department.departmentName, user.signature,user.level,user.grade
+        FROM `User` LEFT JOIN `Department` ON user.departmentId = department.departmentId WHERE
+        user.userId=#{userId}
+    </select>
+
+    <update id="modifyUser" parameterType="String">
+        UPDATE USER
+        <trim prefix="set" suffixOverrides="," suffix="where userId=#{userId}">
+            <if test="userName != null">userName=#{userName},</if>
+            <if test="password != null "> password=#{password},</if>
+            <if test="userPic != null ">   userPic=#{userPic},</if>
+            <if test="signature != null">signature=#{signature},</if>
+        </trim>
+    </update>
+
+    <select id="findPartner" resultType="com.pztws.demo.model.User">
+        SELECT user.username,user.userPic,department.departmentName, user.signature,user.level,user.grade
+        FROM `User` LEFT JOIN `Department` ON user.departmentId = department.departmentId
+        WHERE LEVEL=1 OR LEVEL =2 OR LEVEL=0
+    </select>
+
+    <update id="changeLevel">
+        UPDATE USER SET LEVEL = #{level} WHERE userId=#{userId}
+    </update>
+
+    <update id="change0Department" parameterType="String">
+        UPDATE USER SET departmentId = null WHERE userId=#{userId}
+    </update>
+
+    <select id="findLevelbyDepartment" parameterType="String" resultMap="resultUserLevel">
+        SELECT user.userId,user.userName,user.userPic,department.departmentId,department.departmentName,user.level
+        FROM `User` LEFT JOIN `Department` ON user.departmentId = department.departmentId
+        WHERE user.departmentId=#{departmentId}
+    </select>
+
+    <select id="findLevel" resultMap="resultUserLevel">
+        SELECT user.userId,user.userName,user.userPic,department.departmentId,department.departmentName,user.level
+        FROM `User` LEFT JOIN `Department` ON user.departmentId = department.departmentId
+    </select>
+
+</mapper>

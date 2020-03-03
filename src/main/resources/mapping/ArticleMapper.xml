@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pztws.demo.dao.ArticleDao">
+
+    <resultMap id="resultArticle" type="com.pztws.demo.model.Article">
+        <id property="articleId" column="articleId" javaType="String" jdbcType="VARCHAR"/>
+        <result property="title" column="title" javaType="String" jdbcType="VARCHAR"/>
+        <result property="shortBorder" column="shortBorder" javaType="String" jdbcType="VARCHAR"/>
+        <result property="border" column="border" javaType="String" jdbcType="LONGVARCHAR"/>
+        <result property="indexStatus" column="indexStatus" javaType="Integer" jdbcType="INTEGER"/>
+        <result property="dateNow" column="dateNow" javaType="String" jdbcType="TIMESTAMP"/>
+        <result property="picUrl" column="picUrl" javaType="String" jdbcType="VARCHAR"/>
+        <result property="typeListString" column="typeIdList" javaType="String" jdbcType="VARCHAR"/>
+        <result property="userId" column="userId" javaType="String" jdbcType="VARCHAR"/>
+        <result property="editor" column="username" javaType="String" jdbcType="VARCHAR"/>
+    </resultMap>
+
+
+    <select id="findTop" resultType="com.pztws.demo.model.ArticleSmall">
+        SELECT articleId,title,shortBorder,picUrl  FROM article WHERE indexStatus=1
+    </select>
+
+    <select id="findWheel" resultType="com.pztws.demo.model.ArticleSmall">
+        SELECT articleId,title,picUrl  FROM article WHERE indexStatus=2
+    </select>
+
+    <select id="findAll" resultMap="resultArticle">
+        SELECT articleId,title, shortBorder,border,indexStatus,typeIdList,dateNow,picUrl,user.username
+        FROM `Article` LEFT JOIN `User` ON article.userId = user.userId
+    </select>
+
+    <select id="findTypeArticles" parameterType="String" resultMap="resultArticle">
+        SELECT articleId,title,shortBorder,border,typeIdList,dateNow,picUrl,indexStatus,user.username
+        FROM article LEFT JOIN `User` ON article.userId = user.userId
+        where typeIdList like #{type}
+    </select>
+
+
+    <select id="findMyselfArticles" parameterType="String" resultMap="resultArticle">
+        SELECT  articleId,title,shortBorder,border,typeIdList,dateNow,picUrl,indexStatus,user.username
+        FROM `Article` LEFT JOIN `User` ON article.userId = user.userId
+         WHERE article.userId=#{userId}
+    </select>
+
+    <select id="findArticle" parameterType="String" resultMap="resultArticle">
+        SELECT articleId,title,shortBorder,border,typeIdList,dateNow,picUrl,indexStatus,article.userId,user.username
+        FROM `Article` LEFT JOIN `User` ON article.userId = user.userId
+        WHERE articleId=#{articleId}
+    </select>
+
+    <delete id="deleteArticle" parameterType="String" >
+        DELETE FROM article WHERE articleId = #{articleId}
+    </delete>
+
+    <select id="selectCount" resultType="integer">
+        SELECT COUNT(*) FROM Article
+    </select>
+
+    <insert id="insertArticle" parameterType="com.pztws.demo.model.Article">
+        insert into Article(articleId,title, border, userId,typeIdList,shortBorder
+        <if test="Article.picUrl!=null and Article.picUrl!=''">
+            ,picUrl
+        </if>
+
+        <if test="Article.indexStatus!=null and Article.indexStatus!=''">
+            ,indexStatus
+        </if>
+       )
+        VALUES(
+        #{Article.articleId},
+        #{Article.title},
+        #{Article.border},
+        #{Article.userId},
+        #{Article.typeListString,jdbcType=VARCHAR},
+        #{Article.shortBorder,jdbcType=VARCHAR}
+        <if test="Article.picUrl!=null and Article.picUrl!=''">
+            ,#{Article.picUrl,jdbcType=VARCHAR}
+        </if>
+
+        <if test="Article.indexStatus!=null and Article.indexStatus!=''">
+            ,#{Article.indexStatus}
+        </if>
+        )
+    </insert>
+
+
+    <update id="modifyArticle" parameterType="com.pztws.demo.model.Article">
+        UPDATE ARTICLE
+        <trim prefix="set" suffixOverrides="," suffix="where articleId=#{Article.articleId}">
+            <if test="Article.title != null">title=#{Article.title},</if>
+            <if test="Article.shortBorder != null "> shortBorder=#{Article.shortBorder},</if>
+            <if test="Article.border != null ">border=#{Article.border},</if>
+            <if test="Article.picUrl != null">picUrl=#{Article.picUrl},</if>
+            <if test="Article.indexStatus != null ">indexStatus=#{Article.indexStatus},</if>
+            <if test="Article.typeListString != null">typeIdList=#{Article.typeListString},</if>
+        </trim>
+    </update>
+
+</mapper>

@@ -1,7 +1,23 @@
 server:
   port: 8080
+  tomcat:
+    max-threads: 800
+    uri-encoding: UTF-8
+
 
 spring:
+  application:
+    name: swagger2word
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    cache: false
+    servlet:
+      content-type: text/html
+    enabled: true
+    encoding: UTF-8
+    mode: HTML5
+
   datasource:
     name: pztws
     type: com.alibaba.druid.pool.DruidDataSource
@@ -13,7 +29,7 @@ spring:
       #基本属性
       url: jdbc:mysql://127.0.0.1:3306/pztws?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&serverTimezone=GMT
       username: root
-      password: 123456
+      password: AS29.lpkxzalqw
       #配置初始化大小/最小/最大
       initial-size: 1
       min-idle: 1
@@ -32,6 +48,34 @@ spring:
       pool-prepared-statements: false
       max-pool-prepared-statement-per-connection-size: 20
 ## 该配置节点为独立的节点，有很多同学容易将这个配置放在spring的节点下，导致配置无法被识别
+# Swagger json url address
+# etc. https://petstore.swagger.io/
+swagger.url: http://localhost:8080/v2/api-docs
+
 mybatis:
   mapper-locations: classpath:mapping/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
   type-aliases-package: com.pztws.demo.model  # 注意：对应实体类的路径
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+jackson:
+  default-property-inclusion: non_null
+
+
+#pagehelper:
+#  #  helperDialect: mysql
+#  reasonable: false   # 禁用合理化时，如果pageNum<1或pageNum>pages会返回空数据
+
+  #七牛云配置 上传凭证AccessKey，SecretKey和Bucket
+  qiniu:     
+       accessKey: P63Fl_oUacfVwpMGuiR826rc7byWqwqyy_OBIVm3
+       secretKey: yL_Uk2M3b68aM96ZC2dW-F8eir0R2Vuq5vE9wItz
+       domain: http://q4z9evzif.bkt.clouddn.com/
+       bucket: pztws
+
+
+
+
+
+
+

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pztws.demo.dao.TypeDao">
+
+
+    <select id="findTypeList" resultType="java.util.HashMap">
+        SELECT typeId,typeName FROM type_name
+    </select>
+
+    <select id="findTypeById" resultType="java.util.HashMap">
+        select typeName FROM Type_name WHERE typeId=#{typeId}
+    </select>
+
+    <select id="findTypeListById" resultType="java.util.HashMap">
+        select typeId,typeName FROM Type_name WHERE typeId IN
+        <foreach  collection="list" item="typeId" index="index" open="(" close=")" separator=",">
+             #{typeId}
+        </foreach>
+    </select>
+
+    <select id="selectCount" resultType="integer">
+        SELECT COUNT(*) FROM Type_name
+    </select>
+
+    <insert id="insertType" parameterType="String">
+        INSERT INTO Type_name (`typeId`,`typeName`) VALUES(#{typeId},#{typeName})
+    </insert>
+
+    <delete id="deleteType" parameterType="String">
+        DELETE FROM Type_name WHERE typeId = #{typeId}
+    </delete>
+
+    <update id="modifyType">
+        UPDATE Type_name SET typeName = #{typeName} WHERE typeId=#{typeId}
+    </update>
+
+    <update id="modifyArticleType" parameterType="String">
+        UPDATE Article SET typeIdList = REPLACE(typeIdList,#{typeId},#{goalTypeId}) WHERE articleId=#{articleId}
+    </update>
+
+</mapper>

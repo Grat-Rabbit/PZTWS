@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.pztws.demo.dao.ReplyDao">
+
+    <select id="findAll" resultType="com.pztws.demo.model.Reply">
+        SELECT reply.`replyId`,user.`level`,user.`userName`,user.`userPic`,reply.`datetime`,reply.`body` FROM reply LEFT JOIN user ON reply.userId = user.userId
+    </select>
+
+    <insert id="insertReply" parameterType="String">
+        INSERT INTO reply (`userId`,`body`) VALUES(#{userId},#{body})
+    </insert>
+
+    <delete id="deleteReply" parameterType="String">
+        DELETE FROM reply WHERE replyId = #{replyId}
+    </delete>
+
+    <select id="findReply" parameterType="String" resultType="com.pztws.demo.model.Reply">
+        SELECT reply.`replyId`,user.`level`,user.`userId`,user.`userName`,user.`userPic`,reply.`datetime`,reply.`body` FROM reply RIGHT JOIN USER ON reply.userId = user.userId WHERE replyId=#{replyId}
+    </select>
+
+
+    <select id="findMyselfList" parameterType="String" resultType="com.pztws.demo.model.Reply">
+        SELECT `replyId`,`datetime`,`body` FROM reply WHERE userId=#{userId}
+    </select>
+</mapper>

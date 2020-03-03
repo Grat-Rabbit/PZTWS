@@ -1,33 +1,24 @@
 package com.pztws.demo.utils;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import lombok.Data;
+
 /**
  * 返回结果类
  */
+@Data
+@JsonInclude(Include.NON_NULL)
 public class Result {
-    private Boolean success;
-    private String message;
+    private boolean status;
+    private Object data;
 
-    public Boolean getSuccess() {
-        return success;
+    public Result(){
+
     }
 
-    public void setSuccess(Boolean success) {
-        this.success = success;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public Result() {
-    }
-
-    public Result(Boolean success, String message) {
-        this.success = success;
-        this.message = message;
+    public Result(boolean status, Object data) {
+        this.status = status;
+        this.data = data;
     }
 }
